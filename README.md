@@ -90,7 +90,7 @@ The parameters of `Trigger` function is defined by each primitive type. For the 
 Besides the normal **SignalSender**, some primitive can has secondary **SignalSender**. It will send signal on normal **SignalSender** if certain condition is true, and send signal to the second **SignalSender** if condition is false. We call this
 secondary SignalSender "**Negative**" sender. 
 
-Refer "[**Primitives Reference**](#Primitives+Reference)" section for detail on all supported primitives. 
+Refer "[**Primitives Reference**](#Primitives-Reference)" section for detail on all supported primitives. 
 
 #### Example 1.2 
 
@@ -357,10 +357,10 @@ Deleting one rule means deleting one complex event from rule engine. We will der
 This class define the whole engine, it provide methods 
 
 - **`AddRule`**  
-  Accept one JSON stream as input, create rules and merge into big picture. See "[**Rule Loading**](#Rule+Loading)" section for detail algorithm. 
+  Accept one JSON stream as input, create rules and merge into big picture. See "[**Rule Loading**](#Rule-Loading)" section for detail algorithm. 
 
 - **`DeleteRule`**  
-  Input is the complex event Id, delete primitives used by the rule. See "[**Rule Deleting**](#Rule+Deleting)" section for detail algorithm. 
+  Input is the complex event Id, delete primitives used by the rule. See "[**Rule Deleting**](#Rule-Deleting)" section for detail algorithm. 
 
 - **`RegisterActor`**  
   Input are an event id and an actor reference (callback function pointer or delegate). Rule engine will put it into event dictionary, call the actor when the event generated. We can assign "**priority**" for each actor, actor with higher priority will be put into head of list. 
@@ -543,7 +543,7 @@ On the start point, dispatcher will simply use the input event as the context.
 
 Rule designer should know clearly on how context passed and what are inside each context, so can write correct **macro** to retrieve properties from it. 
 
-Please refer to the "[Context Change](#Context+Change)" part of each primitive reference. 
+Please refer to the "[Context Change](#Context-Change)" part of each primitive reference. 
 
 ### Dynamic Signal Parameters 
 
@@ -1388,6 +1388,7 @@ No Context
 ##### Example 
 
 See example of "[`Collector`](#Collector)" and "[`RepeatCounter`](#RepeatCounter)". 
+
 
   
 
