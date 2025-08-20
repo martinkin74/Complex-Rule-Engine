@@ -1,0 +1,68 @@
+{
+    "Rules" :
+    [
+        {
+            "RuleName" : "Test Primitive Sharing",
+            "SourceEvents" :
+            [
+                {
+                    "EventName" : "ProcessStart",
+                    "ConnectTo" : { "StringFilter_1" : { "SignalParameter":"#MACRO#Context.Event.ProcessName" } }
+                },
+                {
+                    "EventName" : "ProcessExit",
+                    "ConnectTo" : { "KeyedCollectorInOrder_1" : { "SignalParameter": [ "#MACRO#Context.Event.ProcessId", 0, true ] } }
+                },
+                {
+                    "EventName" : "FileCreated",
+                    "ConnectTo" : { "KeyedCollectorInOrder_1" : { "SignalParameter" : [ "#MACRO#Context.Event.ProcessId", 1] } }
+                }, 
+                {
+                    "EventName" : "TestEvent",
+                    "ConnectTo" : { "IntegerFilter_1" : { "SignalParameter" : "#MACRO#Context.Event.intNumber" } }
+                } 
+            ],
+            "Primitives":
+            [
+                {
+                    "Type" : "StringFilter",
+                    "Name" : "StringFilter_1",
+                    "Parameters" : {
+                        "Method" : "MatchSingle",
+                        "Condition" : "Equals",
+                        "MatchTo" : "Notepad.exe"
+                    },
+                    "ConnectTo" : { "KeyedCollectorInOrder_1" : { "SignalParameter" : [ "#MACRO#Context.Event.ProcessId", 0] } }
+                },
+                {
+                    "Type" : "KeyedCollectorInOrder",
+                    "Name" : "KeyedCollectorInOrder_1",
+                    "Parameters" : { "SourceCount" : 2 },
+                    "ConnectTo" : { "Collector_1" : { "SignalParameter" : 0 } }
+                },
+                {
+                    "Type" : "IntegerFilter",
+                    "Name" : "IntegerFilter_1",
+                    "Parameters" : {
+                        "Condition" : "LessThan",
+                        "CompareTo" : 0
+                    },
+                    "ConnectTo" : { "Collector_1" : { "SignalParameter" : 1, "TriggerOnNegative" : true } }
+                },
+                {
+                    "Type" : "Collector",
+                    "Name" : "Collector_1",
+                    "Parameters" : { "SourceCount" : 2 },
+                    "ConnectTo" : { "EventGenerator_1" : {} }
+                },
+                {
+                    "Type" : "EventGenerator",
+                    "Name" : "EventGenerator_1",
+                    "Parameters" : { 
+                        "NewEventName" : "NewTestEvent",
+                    }
+                }
+            ],
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+C:\Source\RuleEngine\RuleEngine\bin\Debug\RuleEngine.dll
+C:\Source\RuleEngine\RuleEngine\bin\Debug\RuleEngine.pdb
+C:\Source\RuleEngine\RuleEngine\bin\Debug\Newtonsoft.Json.dll
+C:\Source\RuleEngine\RuleEngine\obj\Debug\RuleEngine.dll
+C:\Source\RuleEngine\RuleEngine\obj\Debug\RuleEngine.pdb
+C:\Source\cylance.complexanalysispipeline\RuleEngine\RuleEngine\bin\Debug\RuleEngine.dll
+C:\Source\cylance.complexanalysispipeline\RuleEngine\RuleEngine\bin\Debug\RuleEngine.pdb
+C:\Source\cylance.complexanalysispipeline\RuleEngine\RuleEngine\bin\Debug\Newtonsoft.Json.dll
+C:\Source\cylance.complexanalysispipeline\RuleEngine\RuleEngine\obj\Debug\RuleEngine.dll
+C:\Source\cylance.complexanalysispipeline\RuleEngine\RuleEngine\obj\Debug\RuleEngine.pdb

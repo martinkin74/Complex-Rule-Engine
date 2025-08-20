@@ -1,0 +1,43 @@
+{
+    "Rules" :
+    [
+        {
+            "RuleName" : "TestSpeedAlarm",
+            "SourceEvents" :
+            [
+                {
+                    "EventName" : "WindowsEvent",
+                    "ConnectTo" : { "IntegerFilter_1" : { "SignalParameter":"#MACRO#Context.Event.WindowsEventId" } }
+                },
+            ],
+            "Primitives":
+            [
+                {
+                    "Type" : "IntegerFilter",
+                    "Name" : "IntegerFilter_1",
+                    "Parameters" : {
+                        "Condition" : "Equals",
+                        "CompareTo" : 4625
+                    },
+                    "ConnectTo" : { "SpeedAlarm_1" : { "SignalParameter" : 1 } }
+                },
+                {
+                    "Type" : "SpeedAlarm",
+                    "Name" : "SpeedAlarm_1",
+                    "Parameters" : { 
+                        "MaximumSpeed" : 3,
+                        "Period" : 5,
+                    },
+                    "ConnectTo" : { "EventGenerator_1" : {} }
+                },
+                {
+                    "Type" : "EventGenerator",
+                    "Name" : "EventGenerator_1",
+                    "Parameters" : { 
+                        "NewEventName" : "Event4625Alert",
+                    }
+                }
+            ],
+        }
+    ]
+}
