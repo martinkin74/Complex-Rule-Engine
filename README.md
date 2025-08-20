@@ -1,6 +1,6 @@
 **Rule Engine** is used in many projects. Basically we define rules, apply rules into rule engine. Then when events come, the rule engine will process events based on rules, generate decision and send to actors.
 
-<img src="_images/ComplexEventsProcess001.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess001.png" width=400></p>
 
 ## Simple Rule vs Complex Rule 
 
@@ -23,7 +23,7 @@ Be able to process **Complex Rule** is required in many real-life cases.
 
 For the rule `If process "Notepad.exe" write a file to disk, and later the file start run, then alert user` as example.
 
-<img src="_images/ComplexEventsProcess002.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess002.png" width=500></p>
 
 - On event `FileCreationEvent`, state machine will transfer to state **1** if the file creator is "Notepad.exe". State machine will start monitor interested events.
 - Later when a `ProcessStartEvent` come, the state machine will compare the process executable file, if it match the one "Notepad.exe" created, it will transfer to the end state and make decision (trigger the alert)
@@ -42,11 +42,11 @@ In software engineering, usually we want to design a generic function trying han
 
 Still take the example rule above. The logic flow is
 
-<img src="_images/ComplexEventsProcess003.png" width=500>
+<p align="center"><img src="_images/ComplexEventsProcess003.png" width=500></p>
 
 If we replace it with some generic **primitive**, it equals to this:
 
-<img src="_images/ComplexEventsProcess003_2.png" width=500>
+<p align="center"><img src="_images/ComplexEventsProcess003_2.png" width=500></p>
 
 If we input this graph into the rule engine as instruction and let rule engine assembly primitives according to the graph, we will get a engine dynamically to handle the rule. The rule logic become the connections between primitives.
 
@@ -69,7 +69,7 @@ There are actually two different meanings for this rule:
 
 For the first meaning, we can assemble primitives like: 
 
-<img src="_images/ComplexEventsProcess004.png" width=500>
+<p align="center"><img src="_images/ComplexEventsProcess004.png" width=500></p>
 
 Blue line means signal trigger; Yellow line means event; Green line means `Check`. 
 
@@ -96,7 +96,7 @@ Refer "[**Primitives Reference**](#Primitives+Reference)" section for detail on 
 
 For the second meaning of the rule, we need change primitives layout to this: 
 
-<img src="_images/ComplexEventsProcess005.png" width=700>
+<p align="center"><img src="_images/ComplexEventsProcess005.png" width=700></p>
 
 A new primitive `Collector` is introduced here. `Collector` will collect signals, trigger output signal only if collected all input signals. It maintains slots internally and mark one slot true if a signal received for that slot. Its **SignalReceiver** needs a parameter so it can know which slot hit. 
 
@@ -112,7 +112,7 @@ Let's also follow the first meaning which is simpler.
 
 After combine two rules, the final result is. 
 
-<img src="_images/ComplexEventsProcess006.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess006.png" width=600></p>
 
 We are sharing same `Counter` here. 
 
@@ -127,7 +127,7 @@ Keep all rules in **Example 2**, further implement rule
 If event A, B and C are all happened, trigger event G
 ```
 
-<img src="_images/ComplexEventsProcess007.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess007.png" width=600></p>
 
 A `Collector` will fulfill this job. 
 
@@ -140,11 +140,11 @@ If event A, B, C and D are all happened, trigger event H
 
 There are two ways to design this, we can either implement the rule as is:   
 
-<img src="_images/ComplexEventsProcess008.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess008.png" width=600></p>
 
 Or, we noticed that we already have a rule for event **G**, and the new rule is equals to `If event G and D are all happened, trigger event H`. We can reuse event **G** this way. The collector of event H only collect event **D** and **G**, don't care about **A**, **B**, **C**.
 
-<img src="_images/ComplexEventsProcess009.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess009.png" width=600></p>
 
 After we create all rules, we will make a big picture with all kinds of primitives connected together and output all possible complex events. 
 
@@ -158,7 +158,7 @@ Whenever one file is blocked/quarantined, we need report to backend. But we don'
 * If we already sent report recently, hold new coming **block** events for one minute. 
 * Do not report if there is no new file blocked. 
   
-<img src="_images/ComplexEventsProcess010.png" width=800>
+<p align="center"><img src="_images/ComplexEventsProcess010.png" width=800></p>
 
 Whenever a file is blocked, an event `FileBlocked` will be created and feed into rule engine. 
 
@@ -182,7 +182,7 @@ So for "**NOT**" logic, we just connect the next primitive onto the "***Negative
 
 For "**OR**" logic, it usually can be represent with `if … else…`. For example: `If (A or B) then C` can be represent as `if A then C, else if B then C`. This can be graph as:
 
-<img src="_images/ComplexEventsProcess011.png" width=300>
+<p align="center"><img src="_images/ComplexEventsProcess011.png" width=300></p>
 
 Some primitive internally provide "**OR**" operations. For examples if we want to implement `if string equals A or B or C`, we can use "**MatchList**" mode of [`StringFilter`](#StringFilter) and put strings "A" "B" and "C" inside the target list. 
 
@@ -598,7 +598,7 @@ This primitive will save all input context. When output, the new context is a li
 Rule: 
 *On event "**RegistryWrite**", if key path is "**path_1**", we give it score 20; if key path is "**path_2**", we give it score 30. We need alert "**RegistryAlert**" if total scores accumulated to 60.* 
 
-<img src="_images/ComplexEventsProcess012.png" width=800>
+<p align="center"><img src="_images/ComplexEventsProcess012.png" width=800></p>
   
 ```json
 {
@@ -685,7 +685,7 @@ Since this primitive does not output signal, it does not care about context.
 Rule: 
 *If event "**B**" happens and event "**A**" happened more than 100 times, fire event "**E**"* 
 
-<img src="_images/ComplexEventsProcess013.png" width=550>
+<p align="center"><img src="_images/ComplexEventsProcess013.png" width=550></p>
 
 ```json
 {
@@ -800,7 +800,7 @@ Rule:
 - *If we've already reported recently (within 10 seconds), hold new "**FileBlocked**" events, report every 10 seconds. *
 - *Do not report if there is no new "**FileBlocked**". *
 
-<img src="_images/ComplexEventsProcess014.png" width=800>
+<p align="center"><img src="_images/ComplexEventsProcess014.png" width=800></p>
 
 ```json
 {
@@ -888,7 +888,7 @@ Rule:
 
 *If event **B** happens after event **A**, within 10 seconds, generate event **E** and report property `Prop_1`, using property `Prop` of **B**.*
 
-<img src="_images/ComplexEventsProcess015.png" width=500>
+<p align="center"><img src="_images/ComplexEventsProcess015.png" width=500></p>
 
 ```json
 {
@@ -1017,7 +1017,7 @@ Rule:
 
 *When received event **A**, and its property `Prop1` is 0 or 1, trigger alert event **E**, report property `Prop` using `A.Prop2` *
 
-<img src="_images/ComplexEventsProcess016.png" width=600>
+<p align="center"><img src="_images/ComplexEventsProcess016.png" width=600></p>
 
 ```json
 {
@@ -1099,7 +1099,7 @@ Rule:
 
 *Alert if one process changed both registry key **A** and **B** *
 
-<img src="_images/ComplexEventsProcess017.png" width=800>
+<p align="center"><img src="_images/ComplexEventsProcess017.png" width=800></p>
 
 ```json
 {
@@ -1215,7 +1215,7 @@ Rule:
 
 *Alert if one file created by notepad.exe and run as script. *
 
-<img src="_images/ComplexEventsProcess018.png" width=850>
+<p align="center"><img src="_images/ComplexEventsProcess018.png" width=850></p>
 
 ```json
 {
@@ -1302,7 +1302,7 @@ Rule:
 
 *Create a timer of 5 second.* 
 
-<img src="_images/ComplexEventsProcess019.png" width=450>
+<p align="center"><img src="_images/ComplexEventsProcess019.png" width=450></p>
 
 ```json
 {
